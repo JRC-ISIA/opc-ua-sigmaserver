@@ -1,0 +1,35 @@
+FROM debian:bullseye
+
+# ---- System Packages ----
+RUN apt-get update && \
+    apt-get install -y \
+        build-essential cmake git libmodbus-dev python3 curl \
+        libssl-dev pkg-config && \
+    apt-get clean
+
+# ---- nlohmann/json ----
+RUN mkdir -p /usr/include/nlohmann && \
+    curl -L https://raw.githubusercontent.com/nlohmann/json/v3.11.2/single_include/nlohmann/json.hpp \
+         -o /usr/include/nlohmann/json.hpp
+
+# ---- open62541 v1.4.8 (WITH SECURITY + PUBSUB) ----
+RUN git clone --branch v1.4.8 https://github.com/open62541/open62541.git /opt/open62541 && \
+    mkdir /opt/open62541/build && cd /opt/open62541/build && \
+    cmake .. \
+        -DUA_NAMESPACE_ZERO=FULL \
+        -DBUILD_SHARED_LIBS=OFF \
+        -DUA_ENABLE_ENCRYPTION=OPENSSL \
+        -DUA_ENABLE_PUBSUB=ON \
+        -DUA_ENABLE_PUBSUB_INFORMATIONMODEL=ON \
+        -DCMAKE_BUILD_TYPE=Release && \
+    make -j$(nproc) && make install
+
+# ---- Project ----
+WORKDIR /app
+COPY . .
+
+# ---- Build ----
+RUN mkdir build && cd build && cmake .. && make -j$(nproc)
+
+# ---- Start ----
+CMD ["./build/aggregation_server"]

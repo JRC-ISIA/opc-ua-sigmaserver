@@ -1,0 +1,27 @@
+{
+  "plcs": [
+    {
+      "alias": "PLC1",
+      "endpoint": "opc.tcp://host.docker.internal:14841",
+      "endpointFallback": "opc.tcp://192.168.1.100:4840",
+      "pollIntervalSec": 1,
+      "latencyTestEnabled": false,
+      "latencyCsvPath": "data/latency_data_PLC21.csv",
+      "nodes": [
+        { "namespaceIndex": 6, "nodeId": 100033}
+      ]
+    }
+  ],
+  "modbus": [
+    {
+      "alias": "Modbus",
+      "ip": "192.168.1.101",
+      "port": 502,
+      "pollIntervalSec": 1,
+      "registers": [
+        { "name": "Temperature", "address": 0, "datatype": "float" },
+        { "name": "RPM", "address": 1, "datatype": "uint16" }
+      ]
+    }
+  ]
+}

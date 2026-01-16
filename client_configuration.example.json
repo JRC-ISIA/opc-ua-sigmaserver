@@ -1,0 +1,29 @@
+{
+  "plcs": [
+    {
+      "alias": "PLC1",
+      "endpoint": "opc.tcp://localhost:4840",
+      "endpointFallback": "opc.tcp://192.168.1.100:4840",
+      "pollIntervalSec": 1,
+      "latencyTestEnabled": false,
+      "latencyCsvPath": "latency_data_PLC1.csv",
+      "nodes": [
+        { "namespaceIndex": 2, "nodeId": 1001 },
+        { "namespaceIndex": 2, "nodeId": 1002 }
+      ]
+    }
+  ],
+  "modbus": [
+    {
+      "alias": "ModbusDevice1",
+      "ip": "192.168.1.200",
+      "port": 502,
+      "pollIntervalSec": 1,
+      "registers": [
+        { "name": "Temperature", "address": 0, "datatype": "float" },
+        { "name": "Pressure", "address": 2, "datatype": "float" },
+        { "name": "Status", "address": 4, "datatype": "uint16" }
+      ]
+    }
+  ]
+}

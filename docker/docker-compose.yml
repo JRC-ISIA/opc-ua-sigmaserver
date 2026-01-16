@@ -1,0 +1,15 @@
+services:
+  sigma-server:
+    environment:
+      - AGG_ENV=DOCKER
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile.ubuntu
+    ports:
+      - "4841:4841"
+      - "4842:4842"
+    volumes:
+      - ../client_configuration.json:/app/client_configuration.json:ro
+      - ../server_configuration.json:/app/server_configuration.json:ro
+      - ../certs:/app/certs:ro
+      - ../data:/app/data

@@ -1,0 +1,14 @@
+services:
+  sigma-server:
+    build: .
+    container_name: sigma-server
+    network_mode: host
+    environment:
+      - AGG_ENV=LOCAL
+    volumes:
+      - ./client_configuration.json:/app/client_configuration.json:ro
+      - ./server_configuration.json:/app/server_configuration.json:ro     
+      - ./certs/server_cert.der:/app/certs/server_cert.der:ro
+      - ./certs/server_key.der:/app/certs/server_key.der:ro
+      - ./certs/trusted:/app/certs/trusted:ro
+      - ./config:/app/config

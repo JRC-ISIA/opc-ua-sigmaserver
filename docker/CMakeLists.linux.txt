@@ -1,0 +1,39 @@
+cmake_minimum_required(VERSION 3.10)
+project(aggregation_server)
+
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+# ---- Linux-spezific include-Paths ----
+include_directories(/usr/local/include)
+include_directories(/usr/include/modbus)
+
+# ---- Library-Paths ----
+link_directories(/usr/local/lib)
+
+# ---- Executable ----
+add_executable(aggregation_server
+    main.cpp
+    server.cpp
+    client.cpp
+    utils.cpp
+    SharedData.cpp
+    config.cpp
+)
+
+# ---- Linking ----
+target_link_libraries(aggregation_server
+    open62541      # OPC UA Bibliothek
+    modbus         # Modbus Bibliothek
+    pthread        # POSIX Threads
+    ssl            # OpenSSL
+    crypto         # OpenSSL Crypto
+    stdc++fs       # Filesystem
+)
+
+# ---- Compiler-Flags (optional) ----
+target_compile_options(aggregation_server PRIVATE
+    -Wall
+    -Wextra
+    -O2
+)

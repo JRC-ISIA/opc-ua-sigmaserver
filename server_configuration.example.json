@@ -1,0 +1,16 @@
+{
+  "servers": [
+    {
+      "port": 4841,
+      "plcAlias": "PLC1",
+      "mode": "CS",
+      "latencyTestEnabled": false
+    },
+    {
+      "port": 4842,
+      "plcAlias": "ModbusDevice1",
+      "mode": "CS",
+      "latencyTestEnabled": false
+    }
+  ]
+}
